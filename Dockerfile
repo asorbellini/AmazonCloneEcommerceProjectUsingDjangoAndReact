@@ -8,19 +8,13 @@ COPY ./Frontend/EcommerceInventory/ /code/Frontend/EcommerceInventory/
 WORKDIR /code/Frontend/EcommerceInventory
 
 #Installing packages
-RUN npm install --legacy-peer-deps
-
-# Debug: Mostrar estructura antes del build
-RUN ls -la /code/Frontend/EcommerceInventory
-
-# Creating build directory manually
-RUN mkdir -p /code/Frontend/EcommerceInventory/build && chmod -R 777 /code/Frontend/EcommerceInventory/build
+RUN npm install
 
 # Building frontend
 RUN npm run build
 
 # Debug: Verificar si build se generó
-RUN ls -la /code/Frontend/EcommerceInventory/build
+RUN ls -la /code/Frontend/EcommerceInventory/dist
 
 #Stage 2: Build Backend
 FROM python:3.12.4
@@ -38,9 +32,9 @@ COPY ./Backend/EcommerceInventory /code/Backend/EcommerceInventory/
 RUN pip install -r ./Backend/EcommerceInventory/requirements.txt
 
 #Copy the Frontend build to the Django Project
-COPY --from=build-stage ./code/Frontend/EcommerceInventory/build /code/Backend/EcommerceInventory/static/
-COPY --from=build-stage ./code/Frontend/EcommerceInventory/build/static /code/Backend/EcommerceInventory/static/
-COPY --from=build-stage ./code/Frontend/EcommerceInventory/build/index.html /code/Backend/EcommerceInventory/EcommerceInventory/templates/index.html
+COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist /code/Backend/EcommerceInventory/static/
+COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist/static /code/Backend/EcommerceInventory/static/
+COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist/index.html /code/Backend/EcommerceInventory/EcommerceInventory/templates/index.html
 
 #Run Django Migration Command
 RUN python ./Backend/EcommerceInventory/EcommerceInventory/manage.py migrate
