@@ -33,7 +33,7 @@ RUN pip install -r ./Backend/EcommerceInventory/requirements.txt
 
 #Copy the Frontend build to the Django Project
 COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist /code/Backend/EcommerceInventory/static/
-COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist/static /code/Backend/EcommerceInventory/static/
+COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist/assets /code/Backend/EcommerceInventory/static/asset
 COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist/index.html /code/Backend/EcommerceInventory/EcommerceInventory/templates/index.html
 
 #Run Django Migration Command
