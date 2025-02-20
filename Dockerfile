@@ -13,6 +13,9 @@ RUN npm install
 #Building frontend
 RUN npm run build 
 
+#Verifying if build exists
+RUN ls -la /code/Frontend/EcommerceInventory/build
+
 #Stage 2: Build Backend
 FROM python:3.12.4
 
