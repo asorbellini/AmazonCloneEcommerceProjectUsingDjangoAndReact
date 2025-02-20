@@ -8,12 +8,18 @@ COPY ./Frontend/EcommerceInventory/ /code/Frontend/EcommerceInventory/
 WORKDIR /code/Frontend/EcommerceInventory
 
 #Installing packages
-RUN npm install 
+RUN npm install --legacy-peer-deps
 
-#Building frontend
-RUN npm run build 
+# Debug: Mostrar estructura antes del build
+RUN ls -la /code/Frontend/EcommerceInventory
 
-#Verifying if build exists
+# Creating build directory manually
+RUN mkdir -p /code/Frontend/EcommerceInventory/build && chmod -R 777 /code/Frontend/EcommerceInventory/build
+
+# Building frontend
+RUN npm run build
+
+# Debug: Verificar si build se generó
 RUN ls -la /code/Frontend/EcommerceInventory/build
 
 #Stage 2: Build Backend
