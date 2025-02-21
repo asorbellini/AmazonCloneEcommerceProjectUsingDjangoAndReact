@@ -25,6 +25,9 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /code
 
+#Copy Django Environment Variables to the container 
+COPY ./Backend/EcommerceInventory/.env /code/Backend/EcommerceInventory/.env
+
 #Copy Django Project to the container
 COPY ./Backend/EcommerceInventory /code/Backend/EcommerceInventory/
 
