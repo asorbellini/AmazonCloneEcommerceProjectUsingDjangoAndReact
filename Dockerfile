@@ -40,10 +40,10 @@ COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist/assets /code/Bac
 COPY --from=build-stage ./code/Frontend/EcommerceInventory/dist/index.html /code/Backend/EcommerceInventory/EcommerceInventory/templates/index.html
 
 #Run Django Migration Command
-RUN python ./Backend/EcommerceInventory/EcommerceInventory/manage.py migrate
+RUN python ./Backend/EcommerceInventory/manage.py migrate
 
 #Run Django Collectstatic Command
-RUN python ./Backend/EcommerceInventory/EcommerceInventory/manage.py collectstatic --no-input
+RUN python ./Backend/EcommerceInventory/manage.py collectstatic --no-input
 
 #Expose the port
 EXPOSE 80
