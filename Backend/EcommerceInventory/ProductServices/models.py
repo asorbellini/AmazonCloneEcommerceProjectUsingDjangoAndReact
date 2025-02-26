@@ -6,7 +6,7 @@ from UserServices.models import Users
 class Categories(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=255)
-    image=models.JSONField(blank=True,null=True)
+    image=models.JSONField(default=list,blank=True, null=True)
     description=models.TextField()
     display_order=models.IntegerField(default=0)
     parent_id=models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
@@ -21,7 +21,7 @@ class Categories(models.Model):
 class Products(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=255, blank=True, null=True)
-    image=models.JSONField()
+    image=models.JSONField(default=list, blank=True, null=True)
     description=models.TextField()
     specifications=models.JSONField()
     html_description=models.TextField()
@@ -63,7 +63,7 @@ class ProductQuestions(models.Model):
 
 class ProductReviews(models.Model):
     id=models.AutoField(primary_key=True)
-    review_images=models.JSONField()
+    review_images=models.JSONField(default=list, blank=True, null=True)
     rating=models.FloatField()
     reviews=models.TextField()
     status=models.CharField(max_length=255, choices=[('ACTIVE', 'ACTIVE'),('INACTIVE','INACTIVE')], default='ACTIVE')

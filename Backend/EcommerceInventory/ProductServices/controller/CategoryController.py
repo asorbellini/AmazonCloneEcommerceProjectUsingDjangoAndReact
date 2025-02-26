@@ -4,6 +4,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from EcommerceInventory.helpers import CustomPageNumberPagination, renderResponse
 from django.db import models
+from django.core.files.storage import default_storage
 
 class CategorySerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
@@ -14,6 +15,7 @@ class CategorySerializer(serializers.ModelSerializer):
     def get_children(self, obj):
         children = Categories.objects.filter(parent_id=obj.id)
         return CategorySerializer(children, many=True).data
+
 
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
@@ -62,3 +64,4 @@ class CategoryListView(generics.ListAPIView):
             total_items=len(data)
         
         return renderResponse(data={'data':data, 'totalPages':total_pages, 'currentPage':current_page, 'pageSize':page_size, 'totalItems':total_items}, message="Categories Retrieved Successfully", status=200)
+    

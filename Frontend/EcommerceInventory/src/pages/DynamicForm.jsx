@@ -17,6 +17,7 @@ const DynamicForm = () => {
     const methods = useForm()
     const [steps, setSteps] = useState(stepItems)
 
+
     const fetchForm = async() =>{
         const response = await callAPI({url:`getForm/${formName}`, method:"get"})
         let stepFilter = stepItems.filter(step => response.data.data[step.fieldType] && response.data.data[step.fieldType].length>0)
@@ -64,7 +65,13 @@ const DynamicForm = () => {
     
     const onSubmit = async(data) => {
         try {
-            const response = await callAPI({url:`getForm/${formName}`, method:"post", body:data})
+            // Incluir las URLs de las imágenes en el cuerpo de los datos
+            console.log("DynamicForm data = ", data)
+            const response = await callAPI({
+                url: `getForm/${formName}`,
+                method: "POST",
+                body: data
+            })
             toast.success(response.data.message)
             setCurrentStep(0)
             methods.reset()
@@ -101,7 +108,7 @@ const DynamicForm = () => {
                                     {step.component && <step.component formConfig={formConfig} fieldType={step.fieldType}/>}
                                 </Box>
                             ))}
-                        </> 
+                        </>
                     }
                     {!formConfig && loading && <LinearProgress/>}
                     <Box mt={2} display="flex" justifyContent="space-between">

@@ -2,6 +2,7 @@ import { width } from "@mui/system"
 import { Box, Collapse, Typography, IconButton } from "@mui/material"
 import { DataGrid, GridRow, GridToolbar } from "@mui/x-data-grid"
 import { Add, Delete, Edit } from "@mui/icons-material"
+import RenderImage from "../../components/RenderImage"
 
 const ExpandableRow = ({row, props, onEditClick, onDeleteClick}) => {
     let columns = []
@@ -10,8 +11,10 @@ const ExpandableRow = ({row, props, onEditClick, onDeleteClick}) => {
             field:key,
             headerName:key.charAt(0).toUpperCase()+key.slice(1).replaceAll("_", " "),
             width:150
-        })).filter((item)=>item.field!=='children')
-
+        })).filter((item)=>item.field!=='children').filter((item)=>item.field!=='image')
+        columns.push({field:'image', headerName:'Image', width:150, sortable:false, renderCell:(params)=>{
+            <RenderImage data={params.row.image} name={params.row.name}/>
+        }})
         columns = [{field:'action', headerName:'Action', width:180, sortable:false, renderCell:(params)=>{
             return(
                 <>

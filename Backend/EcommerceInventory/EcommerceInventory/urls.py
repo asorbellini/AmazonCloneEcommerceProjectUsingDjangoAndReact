@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from EcommerceInventory import settings, views
+from EcommerceInventory import settings
 from UserServices.Controller.DynamicFormController import DynamicFormController
 from UserServices.Controller.SuperAdminDinamicFormController import SuperAdminDynamicFormController
 from UserServices.Controller.SidebarController import ModuleView
 from django.conf.urls.static import static
+from EcommerceInventory.views import FileUploadView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,12 +29,15 @@ urlpatterns = [
     path('api/getForm/<str:modelName>', DynamicFormController.as_view(), name='dynamicForm'),
     path('api/superAdminForm/<str:modelName>', SuperAdminDynamicFormController.as_view(), name='superAdminDynamicForm'),
     path('api/getMenus/', ModuleView.as_view(), name='sidebarMenu'),
-    path('api/products/', include('ProductServices.urls'))
+    path('api/products/', include('ProductServices.urls')),
+    path('api/upload-images/', FileUploadView.as_view(), name='fileUpload')
 ]
 
 if settings.DEBUG:
-    urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)
 
-urlpatterns += [
+
+
+""" urlpatterns += [
     re_path(r'^(?:.*)/?$', views.index, name="index")
-]
+] """

@@ -39,8 +39,14 @@ export const getUser = () => {
 
 export const isValidUrl = (url) => {
     try{
-        new URL(url)
-        return true
+        if (Array.isArray(url) && url.length>0){
+                new URL(`http://127.0.0.1:8000/static${url[0]}`)
+                return true
+        }
+        else{
+            new URL(`http://127.0.0.1:8000/static${url}`)
+            return true
+        }
     }
     catch (e) {
         return false
@@ -58,4 +64,14 @@ export const getFormTypes = () => {
             {component:StepFileComponents, label:'Documents & Files', fieldType:'file'}
         ]
     )
+}
+
+export const getImageUrl = (url) => {
+    if  (Array.isArray(url) && url.length>1){
+        const previweurl = new URL(`http://127.0.0.1:8000/static${url[0]}`)
+        return (previweurl)
+    } else {
+        const previweurl = new URL(`http://127.0.0.1:8000/static${url}`)
+        return(previweurl)
+    }
 }
